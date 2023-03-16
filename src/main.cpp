@@ -3,20 +3,14 @@
 #include <UniversalTelegramBot.h>
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
-
-// WiFi connection parameters
-const char* ssid = "The Homestead";
-const char* password = "2001hondansx";
+#include <secrets.h>
 
 // Telegram Bot Authorization Token (Get from Botfather)
-#define botToken "6290422799:AAHFBzo_hfEOIOJf0HaWyXjd3EANhspGI84"
+
 WiFiClientSecure client;
 UniversalTelegramBot bot(botToken, client);
 long checkTelegramDueTime;
 int checkTelegramDelay = 1000;
-
-// People to send messages to
-#define CHAT_ID "6094819483"
 
 #ifdef ESP8266
   X509List cert(TELEGRAM_CERTIFICATE_ROOT);
@@ -25,7 +19,7 @@ int checkTelegramDelay = 1000;
 // Initialize Sensor
 #define sensorPin A0
 long moistureSensorDueTime;
-int moistureSensorDelay = 5000;
+int moistureSensorDelay = 10800000;
 int soilMoistureValue = 0;
 
 void handleNewMessages(int numNewMessages);
@@ -73,8 +67,8 @@ void loop() {
     Serial.println("----- Checking Moisture Sensor -----");
     soilMoistureValue = analogRead(sensorPin);
     Serial.println(soilMoistureValue);
-    if (soilMoistureValue > 0) {
-      String s = "Soil Moisture Normal";
+    if (soilMoistureValue > 770) {
+      String s = "Plants Need Watering!";
       bot.sendMessage(CHAT_ID, s, "");
     }
     
