@@ -67,7 +67,7 @@ void loop() {
     Serial.println("----- Checking Moisture Sensor -----");
     soilMoistureValue = analogRead(sensorPin);
     Serial.println(soilMoistureValue);
-    if (soilMoistureValue > 770) {
+    if (soilMoistureValue > 772) {
       String s = "Plants Need Watering!";
       bot.sendMessage(CHAT_ID, s, "");
     }
